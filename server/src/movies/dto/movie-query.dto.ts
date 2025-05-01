@@ -42,6 +42,9 @@ export class PopularMovieQueryDto {
 export class SearchMovieQueryDto {
   @IsString()
   @IsOptional()
+  @Transform(({ value }) =>
+    typeof value === 'string' ? value.replace(/ /g, '%20') : undefined,
+  )
   query?: string;
 
   @IsOptional()

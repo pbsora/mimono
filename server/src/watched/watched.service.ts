@@ -6,10 +6,17 @@ import {
 import { CreateWatchedDto } from './dto/create-watched.dto';
 import { UpdateWatchedDto } from './dto/update-watched.dto';
 import { PrismaService } from '../db/prisma.service';
+import { WatchedItemDto } from './dto/watched-item.dto';
+import { MoviesService } from '../movies/movies.service';
+import { plainToClass } from 'class-transformer';
+import { MovieByIdResponseDto } from '../movies/dto/movie.dto';
 
 @Injectable()
 export class WatchedService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly movieService: MoviesService,
+  ) {}
 
   async create(userId: string, createWatchedDto: CreateWatchedDto) {
     const res = await this.prisma.watched.create({
@@ -23,7 +30,34 @@ export class WatchedService {
   }
 
   async findAll(userId: string) {
-    return this.prisma.watched.findMany({ where: { userId } });
+    const watchedMovies = await this.prisma.watched.findMany({
+      where: { userId },
+    });
+
+    if (watchedMovies.length == 0) {
+      return []; // No movies found in the watchlist
+    }
+
+    const formattedWatchedList: WatchedItemDto[] = watchedMovies.map(
+      (movie) => ({
+        id: movie.id,
+        userId: movie.userId,
+        createdAt: movie.createdAt,
+        movieId: movie.movieId,
+        rating: movie.rating,
+        review: movie.review,
+        details: null,
+      }),
+    );
+
+    for (const movie of formattedWatchedList) {
+      const details = await this.movieService.searchMovieById(movie.movieId);
+      movie.details = plainToClass(MovieByIdResponseDto, details, {
+        excludeExtraneousValues: true,
+      });
+    }
+
+    return formattedWatchedList;
   }
 
   async findOne(id: string) {

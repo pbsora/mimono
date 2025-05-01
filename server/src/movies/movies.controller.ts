@@ -11,18 +11,18 @@ import { MovieSearchResponseDto } from './dto/movie.dto';
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 
+  @Get()
+  async search(@Query() query: SearchMovieQueryDto) {
+    const data = await this.moviesService.searchMovies(query);
+    return plainToClass(MovieSearchResponseDto, data, {});
+  }
+
   @Get('popular')
   async findPopular(@Query() query: PopularMovieQueryDto) {
     const data = await this.moviesService.popularMovies(query);
     return plainToClass(MovieSearchResponseDto, data, {
       excludeExtraneousValues: true,
     });
-  }
-
-  @Get('search')
-  async findLatest(@Query() query: SearchMovieQueryDto) {
-    const data = await this.moviesService.searchMovies(query);
-    return plainToClass(MovieSearchResponseDto, data, {});
   }
 
   @Get(':id')

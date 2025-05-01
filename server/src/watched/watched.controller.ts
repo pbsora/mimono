@@ -16,11 +16,11 @@ import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { RequestWithUser } from '../auth/types/request-user.type';
 
 @Controller('watched')
+@UseGuards(JwtAuthGuard)
 export class WatchedController {
   constructor(private readonly watchedService: WatchedService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard)
   async create(
     @Request() req: RequestWithUser,
     @Body() createWatchedDto: CreateWatchedDto,
@@ -29,19 +29,16 @@ export class WatchedController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
   async findAll(@Request() req: RequestWithUser) {
     return await this.watchedService.findAll(req.user.id);
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
   async findOne(@Param('id') id: string) {
     return await this.watchedService.findOne(id);
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)
   async update(
     @Param('id') id: string,
     @Body() updateWatchedDto: UpdateWatchedDto,
@@ -50,7 +47,6 @@ export class WatchedController {
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
   async remove(@Request() req: RequestWithUser, @Param('id') id: string) {
     return await this.watchedService.remove(req.user.id, id);
   }

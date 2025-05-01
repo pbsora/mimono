@@ -4,6 +4,8 @@ import { PrismaService } from '../db/prisma.service';
 import { newUser, prismaMock } from '../../test/mocks/authMocks';
 import { watchedItemsMock } from '../../test/mocks/watched.mock';
 import { NotFoundException } from '@nestjs/common';
+import { movieServiceMock } from '../../test/mocks/watch-list.mock';
+import { MoviesService } from '../movies/movies.service';
 
 describe('WatchedService', () => {
   let service: WatchedService;
@@ -14,6 +16,7 @@ describe('WatchedService', () => {
       providers: [
         WatchedService,
         { provide: PrismaService, useValue: prismaMock },
+        { provide: MoviesService, useValue: movieServiceMock },
       ],
     }).compile();
 
@@ -46,6 +49,7 @@ describe('WatchedService', () => {
     const res = await service.findAll(user.id);
     // Assert
     expect(res.length).toBe(watchedItemsMock.length);
+    expect(res[0]).toHaveProperty('details');
   });
 
   it('should return a watched record using a valid id', async () => {
