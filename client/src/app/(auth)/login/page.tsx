@@ -2,9 +2,13 @@
 
 import { useFormState } from "react-dom";
 import { loginAction } from "../../../actions/authActions";
+import { useActionState } from "react";
 
 const LoginPage = () => {
-  const [error, action] = useFormState(loginAction, null);
+  const [error, action, isPending] = useActionState(
+    loginAction,
+    null
+  );
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
@@ -27,8 +31,9 @@ const LoginPage = () => {
         <button
           type="submit"
           className="p-2 bg-blue-500 text-white rounded hover:cursor-pointer"
+          disabled={isPending}
         >
-          Login
+          {isPending ? "Wait a moment" : "Login"}
         </button>
         {error && (
           <p className="text-red-500 text-center mt-2">

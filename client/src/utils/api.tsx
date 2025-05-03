@@ -6,16 +6,12 @@ class FetchWrapper {
     this.baseURL = process.env.CLIENT_URL as string;
   }
 
-  async get(url: string) {
+  async get(url: string, headers: HeadersInit) {
     url = url.charAt(0) === "/" ? url.slice(1) : url;
     return fetch(this.baseURL + url, {
       method: "get",
       credentials: "include",
-      headers: {
-        Authorization: `Bearer ${
-          (await cookies()).get("token")?.value
-        };`,
-      },
+      headers,
     });
   }
 

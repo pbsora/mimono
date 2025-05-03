@@ -3,7 +3,6 @@
 import { z } from "zod";
 import API from "../utils/api";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { isAggregateError } from "../utils/helpers";
 
 const loginSchema = z.object({
