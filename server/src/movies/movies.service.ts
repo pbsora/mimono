@@ -8,6 +8,7 @@ import { MovieByIdResponseDto, MovieSearchResponseDto } from './dto/movie.dto';
 import { ApiException } from '../exceptions/api.exception';
 import { PrismaService } from '../db/prisma.service';
 import { plainToClass } from 'class-transformer';
+import { take } from 'rxjs';
 
 @Injectable()
 export class MoviesService {

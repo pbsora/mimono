@@ -1,6 +1,5 @@
 "use client";
 
-import { useFormState } from "react-dom";
 import { loginAction } from "../../../actions/authActions";
 import { useActionState } from "react";
 
@@ -19,13 +18,13 @@ const LoginPage = () => {
         <input
           type="text"
           placeholder="Username"
-          className="mb-4 p-2 border border-gray-300 rounded"
+          className="mb-4 p-2 border border-gray-300 rounded text-white"
           name="username"
         />
         <input
           type="password"
           placeholder="Password"
-          className="mb-4 p-2 border border-gray-300 rounded"
+          className="mb-4 p-2 border border-gray-300 rounded text-white"
           name="password"
         />
         <button

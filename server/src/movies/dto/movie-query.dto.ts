@@ -53,4 +53,9 @@ export class SearchMovieQueryDto {
   @Min(1)
   @Max(1000)
   page?: number = 1;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  take?: number = 12;
 }

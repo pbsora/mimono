@@ -4,6 +4,7 @@ import { z } from "zod";
 import API from "../utils/api";
 import { cookies } from "next/headers";
 import { isAggregateError } from "../utils/helpers";
+import { redirect } from "next/navigation";
 
 const loginSchema = z.object({
   username: z.string().min(3, "Username is required"),
@@ -52,12 +53,15 @@ export const loginAction = async (
       secure: true,
     });
 
-    return true;
+    redirect("/");
   } catch (error) {
     //For some reason redirect cannot be used inside a try-catch block, so this is a workaround
-    // if (error.message === "NEXT_REDIRECT") {
-    //   redirect("/dashboard");
-    // }
+    if (
+      (error as { message: string }).message ===
+      "NEXT_REDIRECT"
+    ) {
+      redirect("/");
+    }
 
     if (isAggregateError(error)) {
       const cause = error.cause as { code?: string };

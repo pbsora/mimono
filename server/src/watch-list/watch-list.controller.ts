@@ -23,7 +23,6 @@ export class WatchListController {
     @Query('page') page?: number,
     @Query('take') take?: number,
   ) {
-    console.log(page, take);
     return await this.watchListService.getWatchList(req.user.id, page, take);
   }
 
