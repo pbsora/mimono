@@ -1,18 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/global/Navbar";
 import BottomBar from "../components/global/BottomBar";
 import { ThemeProvider } from "../components/theme/theme-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
+
+const inter = Inter({
   subsets: ["latin"],
+  // you can also add other options here:
+  weight: ["400", "500", "600", "700"],
+  // display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -28,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black max-w-[100vw] overflow-hidden flex flex-col justify-between h-screen pb-[10vh]`}
+        className={`${inter.className}  antialiased bg-black max-w-[100vw] overflow-hidden flex flex-col justify-between h-screen pb-[7vh]`}
       >
         <ThemeProvider
           attribute="class"

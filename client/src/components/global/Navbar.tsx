@@ -29,15 +29,17 @@ const Navbar = () => {
 
   return (
     <nav
-      className="text-white flex w-screen min-h-[10vh] lg:min-h-[8vh] items-center justify-between border-b border-gray-500/25 pt-2 pb-3 px-5 lg:px-20 lg:py-0 bg-black flex-col gap-3
-    lg:flex-row"
+      className="text-white flex w-screen min-h-[10vh] lg:min-h-[8vh] items-center justify-between border-b border-zinc-300 dark:border-gray-500/25 pt-2 pb-3 px-5 lg:px-20 lg:py-0 bg-slate-100 dark:bg-black flex-col gap-3
+    lg:flex-row shadow-2xl"
     >
-      <div className="w-full lg:w-1/3">Logo</div>
+      <div className="w-full lg:w-1/3 text-black dark:text-white">
+        Logo
+      </div>
       <form className="w-full lg:w-2/3" onSubmit={search}>
         <input
           type="text"
           placeholder="Search..."
-          className="w-full p-2 rounded border border-gray-300 bg-slate-900"
+          className="w-full p-2 rounded border border-gray-300 dark:bg-slate-900 text-black dark:text-white"
           name="search"
           onChange={(e) => setSearchQuery(e.target.value)}
           value={searchQuery}
