@@ -28,6 +28,11 @@ export type WatchList = $Result.DefaultSelection<Prisma.$WatchListPayload>
  * 
  */
 export type Watched = $Result.DefaultSelection<Prisma.$WatchedPayload>
+/**
+ * Model AuthCode
+ * 
+ */
+export type AuthCode = $Result.DefaultSelection<Prisma.$AuthCodePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -183,6 +188,16 @@ export class PrismaClient<
     * ```
     */
   get watched(): Prisma.WatchedDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.authCode`: Exposes CRUD operations for the **AuthCode** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AuthCodes
+    * const authCodes = await prisma.authCode.findMany()
+    * ```
+    */
+  get authCode(): Prisma.AuthCodeDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -625,7 +640,8 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     WatchList: 'WatchList',
-    Watched: 'Watched'
+    Watched: 'Watched',
+    AuthCode: 'AuthCode'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -644,7 +660,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "watchList" | "watched"
+      modelProps: "user" | "watchList" | "watched" | "authCode"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -870,6 +886,80 @@ export namespace Prisma {
           }
         }
       }
+      AuthCode: {
+        payload: Prisma.$AuthCodePayload<ExtArgs>
+        fields: Prisma.AuthCodeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AuthCodeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthCodePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AuthCodeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthCodePayload>
+          }
+          findFirst: {
+            args: Prisma.AuthCodeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthCodePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AuthCodeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthCodePayload>
+          }
+          findMany: {
+            args: Prisma.AuthCodeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthCodePayload>[]
+          }
+          create: {
+            args: Prisma.AuthCodeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthCodePayload>
+          }
+          createMany: {
+            args: Prisma.AuthCodeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AuthCodeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthCodePayload>[]
+          }
+          delete: {
+            args: Prisma.AuthCodeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthCodePayload>
+          }
+          update: {
+            args: Prisma.AuthCodeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthCodePayload>
+          }
+          deleteMany: {
+            args: Prisma.AuthCodeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AuthCodeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AuthCodeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthCodePayload>[]
+          }
+          upsert: {
+            args: Prisma.AuthCodeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthCodePayload>
+          }
+          aggregate: {
+            args: Prisma.AuthCodeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAuthCode>
+          }
+          groupBy: {
+            args: Prisma.AuthCodeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AuthCodeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AuthCodeCountArgs<ExtArgs>
+            result: $Utils.Optional<AuthCodeCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -957,6 +1047,7 @@ export namespace Prisma {
     user?: UserOmit
     watchList?: WatchListOmit
     watched?: WatchedOmit
+    authCode?: AuthCodeOmit
   }
 
   /* Types for Logging */
@@ -1053,11 +1144,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     WatchList: number
     Watched: number
+    AuthCode: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     WatchList?: boolean | UserCountOutputTypeCountWatchListArgs
     Watched?: boolean | UserCountOutputTypeCountWatchedArgs
+    AuthCode?: boolean | UserCountOutputTypeCountAuthCodeArgs
   }
 
   // Custom InputTypes
@@ -1083,6 +1176,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountWatchedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: WatchedWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAuthCodeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AuthCodeWhereInput
   }
 
 
@@ -1248,6 +1348,7 @@ export namespace Prisma {
     password?: boolean
     WatchList?: boolean | User$WatchListArgs<ExtArgs>
     Watched?: boolean | User$WatchedArgs<ExtArgs>
+    AuthCode?: boolean | User$AuthCodeArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1276,6 +1377,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     WatchList?: boolean | User$WatchListArgs<ExtArgs>
     Watched?: boolean | User$WatchedArgs<ExtArgs>
+    AuthCode?: boolean | User$AuthCodeArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1286,6 +1388,7 @@ export namespace Prisma {
     objects: {
       WatchList: Prisma.$WatchListPayload<ExtArgs>[]
       Watched: Prisma.$WatchedPayload<ExtArgs>[]
+      AuthCode: Prisma.$AuthCodePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1688,6 +1791,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     WatchList<T extends User$WatchListArgs<ExtArgs> = {}>(args?: Subset<T, User$WatchListArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchListPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Watched<T extends User$WatchedArgs<ExtArgs> = {}>(args?: Subset<T, User$WatchedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WatchedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    AuthCode<T extends User$AuthCodeArgs<ExtArgs> = {}>(args?: Subset<T, User$AuthCodeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2154,6 +2258,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: WatchedScalarFieldEnum | WatchedScalarFieldEnum[]
+  }
+
+  /**
+   * User.AuthCode
+   */
+  export type User$AuthCodeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthCode
+     */
+    select?: AuthCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthCode
+     */
+    omit?: AuthCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthCodeInclude<ExtArgs> | null
+    where?: AuthCodeWhereInput
+    orderBy?: AuthCodeOrderByWithRelationInput | AuthCodeOrderByWithRelationInput[]
+    cursor?: AuthCodeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AuthCodeScalarFieldEnum | AuthCodeScalarFieldEnum[]
   }
 
   /**
@@ -4326,6 +4454,1090 @@ export namespace Prisma {
 
 
   /**
+   * Model AuthCode
+   */
+
+  export type AggregateAuthCode = {
+    _count: AuthCodeCountAggregateOutputType | null
+    _min: AuthCodeMinAggregateOutputType | null
+    _max: AuthCodeMaxAggregateOutputType | null
+  }
+
+  export type AuthCodeMinAggregateOutputType = {
+    id: string | null
+    code: string | null
+    userId: string | null
+    type: string | null
+    createdAt: Date | null
+    expiresAt: Date | null
+    used: boolean | null
+  }
+
+  export type AuthCodeMaxAggregateOutputType = {
+    id: string | null
+    code: string | null
+    userId: string | null
+    type: string | null
+    createdAt: Date | null
+    expiresAt: Date | null
+    used: boolean | null
+  }
+
+  export type AuthCodeCountAggregateOutputType = {
+    id: number
+    code: number
+    userId: number
+    type: number
+    createdAt: number
+    expiresAt: number
+    used: number
+    _all: number
+  }
+
+
+  export type AuthCodeMinAggregateInputType = {
+    id?: true
+    code?: true
+    userId?: true
+    type?: true
+    createdAt?: true
+    expiresAt?: true
+    used?: true
+  }
+
+  export type AuthCodeMaxAggregateInputType = {
+    id?: true
+    code?: true
+    userId?: true
+    type?: true
+    createdAt?: true
+    expiresAt?: true
+    used?: true
+  }
+
+  export type AuthCodeCountAggregateInputType = {
+    id?: true
+    code?: true
+    userId?: true
+    type?: true
+    createdAt?: true
+    expiresAt?: true
+    used?: true
+    _all?: true
+  }
+
+  export type AuthCodeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AuthCode to aggregate.
+     */
+    where?: AuthCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AuthCodes to fetch.
+     */
+    orderBy?: AuthCodeOrderByWithRelationInput | AuthCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AuthCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AuthCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AuthCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AuthCodes
+    **/
+    _count?: true | AuthCodeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AuthCodeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AuthCodeMaxAggregateInputType
+  }
+
+  export type GetAuthCodeAggregateType<T extends AuthCodeAggregateArgs> = {
+        [P in keyof T & keyof AggregateAuthCode]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAuthCode[P]>
+      : GetScalarType<T[P], AggregateAuthCode[P]>
+  }
+
+
+
+
+  export type AuthCodeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AuthCodeWhereInput
+    orderBy?: AuthCodeOrderByWithAggregationInput | AuthCodeOrderByWithAggregationInput[]
+    by: AuthCodeScalarFieldEnum[] | AuthCodeScalarFieldEnum
+    having?: AuthCodeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AuthCodeCountAggregateInputType | true
+    _min?: AuthCodeMinAggregateInputType
+    _max?: AuthCodeMaxAggregateInputType
+  }
+
+  export type AuthCodeGroupByOutputType = {
+    id: string
+    code: string
+    userId: string
+    type: string
+    createdAt: Date
+    expiresAt: Date
+    used: boolean
+    _count: AuthCodeCountAggregateOutputType | null
+    _min: AuthCodeMinAggregateOutputType | null
+    _max: AuthCodeMaxAggregateOutputType | null
+  }
+
+  type GetAuthCodeGroupByPayload<T extends AuthCodeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AuthCodeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AuthCodeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AuthCodeGroupByOutputType[P]>
+            : GetScalarType<T[P], AuthCodeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AuthCodeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    userId?: boolean
+    type?: boolean
+    createdAt?: boolean
+    expiresAt?: boolean
+    used?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["authCode"]>
+
+  export type AuthCodeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    userId?: boolean
+    type?: boolean
+    createdAt?: boolean
+    expiresAt?: boolean
+    used?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["authCode"]>
+
+  export type AuthCodeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    userId?: boolean
+    type?: boolean
+    createdAt?: boolean
+    expiresAt?: boolean
+    used?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["authCode"]>
+
+  export type AuthCodeSelectScalar = {
+    id?: boolean
+    code?: boolean
+    userId?: boolean
+    type?: boolean
+    createdAt?: boolean
+    expiresAt?: boolean
+    used?: boolean
+  }
+
+  export type AuthCodeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "userId" | "type" | "createdAt" | "expiresAt" | "used", ExtArgs["result"]["authCode"]>
+  export type AuthCodeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type AuthCodeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type AuthCodeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $AuthCodePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AuthCode"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      code: string
+      userId: string
+      type: string
+      createdAt: Date
+      expiresAt: Date
+      used: boolean
+    }, ExtArgs["result"]["authCode"]>
+    composites: {}
+  }
+
+  type AuthCodeGetPayload<S extends boolean | null | undefined | AuthCodeDefaultArgs> = $Result.GetResult<Prisma.$AuthCodePayload, S>
+
+  type AuthCodeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AuthCodeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AuthCodeCountAggregateInputType | true
+    }
+
+  export interface AuthCodeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AuthCode'], meta: { name: 'AuthCode' } }
+    /**
+     * Find zero or one AuthCode that matches the filter.
+     * @param {AuthCodeFindUniqueArgs} args - Arguments to find a AuthCode
+     * @example
+     * // Get one AuthCode
+     * const authCode = await prisma.authCode.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AuthCodeFindUniqueArgs>(args: SelectSubset<T, AuthCodeFindUniqueArgs<ExtArgs>>): Prisma__AuthCodeClient<$Result.GetResult<Prisma.$AuthCodePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AuthCode that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AuthCodeFindUniqueOrThrowArgs} args - Arguments to find a AuthCode
+     * @example
+     * // Get one AuthCode
+     * const authCode = await prisma.authCode.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AuthCodeFindUniqueOrThrowArgs>(args: SelectSubset<T, AuthCodeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AuthCodeClient<$Result.GetResult<Prisma.$AuthCodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AuthCode that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuthCodeFindFirstArgs} args - Arguments to find a AuthCode
+     * @example
+     * // Get one AuthCode
+     * const authCode = await prisma.authCode.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AuthCodeFindFirstArgs>(args?: SelectSubset<T, AuthCodeFindFirstArgs<ExtArgs>>): Prisma__AuthCodeClient<$Result.GetResult<Prisma.$AuthCodePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AuthCode that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuthCodeFindFirstOrThrowArgs} args - Arguments to find a AuthCode
+     * @example
+     * // Get one AuthCode
+     * const authCode = await prisma.authCode.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AuthCodeFindFirstOrThrowArgs>(args?: SelectSubset<T, AuthCodeFindFirstOrThrowArgs<ExtArgs>>): Prisma__AuthCodeClient<$Result.GetResult<Prisma.$AuthCodePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AuthCodes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuthCodeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AuthCodes
+     * const authCodes = await prisma.authCode.findMany()
+     * 
+     * // Get first 10 AuthCodes
+     * const authCodes = await prisma.authCode.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const authCodeWithIdOnly = await prisma.authCode.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AuthCodeFindManyArgs>(args?: SelectSubset<T, AuthCodeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AuthCode.
+     * @param {AuthCodeCreateArgs} args - Arguments to create a AuthCode.
+     * @example
+     * // Create one AuthCode
+     * const AuthCode = await prisma.authCode.create({
+     *   data: {
+     *     // ... data to create a AuthCode
+     *   }
+     * })
+     * 
+     */
+    create<T extends AuthCodeCreateArgs>(args: SelectSubset<T, AuthCodeCreateArgs<ExtArgs>>): Prisma__AuthCodeClient<$Result.GetResult<Prisma.$AuthCodePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AuthCodes.
+     * @param {AuthCodeCreateManyArgs} args - Arguments to create many AuthCodes.
+     * @example
+     * // Create many AuthCodes
+     * const authCode = await prisma.authCode.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AuthCodeCreateManyArgs>(args?: SelectSubset<T, AuthCodeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AuthCodes and returns the data saved in the database.
+     * @param {AuthCodeCreateManyAndReturnArgs} args - Arguments to create many AuthCodes.
+     * @example
+     * // Create many AuthCodes
+     * const authCode = await prisma.authCode.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AuthCodes and only return the `id`
+     * const authCodeWithIdOnly = await prisma.authCode.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AuthCodeCreateManyAndReturnArgs>(args?: SelectSubset<T, AuthCodeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthCodePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AuthCode.
+     * @param {AuthCodeDeleteArgs} args - Arguments to delete one AuthCode.
+     * @example
+     * // Delete one AuthCode
+     * const AuthCode = await prisma.authCode.delete({
+     *   where: {
+     *     // ... filter to delete one AuthCode
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AuthCodeDeleteArgs>(args: SelectSubset<T, AuthCodeDeleteArgs<ExtArgs>>): Prisma__AuthCodeClient<$Result.GetResult<Prisma.$AuthCodePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AuthCode.
+     * @param {AuthCodeUpdateArgs} args - Arguments to update one AuthCode.
+     * @example
+     * // Update one AuthCode
+     * const authCode = await prisma.authCode.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AuthCodeUpdateArgs>(args: SelectSubset<T, AuthCodeUpdateArgs<ExtArgs>>): Prisma__AuthCodeClient<$Result.GetResult<Prisma.$AuthCodePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AuthCodes.
+     * @param {AuthCodeDeleteManyArgs} args - Arguments to filter AuthCodes to delete.
+     * @example
+     * // Delete a few AuthCodes
+     * const { count } = await prisma.authCode.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AuthCodeDeleteManyArgs>(args?: SelectSubset<T, AuthCodeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AuthCodes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuthCodeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AuthCodes
+     * const authCode = await prisma.authCode.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AuthCodeUpdateManyArgs>(args: SelectSubset<T, AuthCodeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AuthCodes and returns the data updated in the database.
+     * @param {AuthCodeUpdateManyAndReturnArgs} args - Arguments to update many AuthCodes.
+     * @example
+     * // Update many AuthCodes
+     * const authCode = await prisma.authCode.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AuthCodes and only return the `id`
+     * const authCodeWithIdOnly = await prisma.authCode.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AuthCodeUpdateManyAndReturnArgs>(args: SelectSubset<T, AuthCodeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthCodePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AuthCode.
+     * @param {AuthCodeUpsertArgs} args - Arguments to update or create a AuthCode.
+     * @example
+     * // Update or create a AuthCode
+     * const authCode = await prisma.authCode.upsert({
+     *   create: {
+     *     // ... data to create a AuthCode
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AuthCode we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AuthCodeUpsertArgs>(args: SelectSubset<T, AuthCodeUpsertArgs<ExtArgs>>): Prisma__AuthCodeClient<$Result.GetResult<Prisma.$AuthCodePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AuthCodes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuthCodeCountArgs} args - Arguments to filter AuthCodes to count.
+     * @example
+     * // Count the number of AuthCodes
+     * const count = await prisma.authCode.count({
+     *   where: {
+     *     // ... the filter for the AuthCodes we want to count
+     *   }
+     * })
+    **/
+    count<T extends AuthCodeCountArgs>(
+      args?: Subset<T, AuthCodeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AuthCodeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AuthCode.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuthCodeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AuthCodeAggregateArgs>(args: Subset<T, AuthCodeAggregateArgs>): Prisma.PrismaPromise<GetAuthCodeAggregateType<T>>
+
+    /**
+     * Group by AuthCode.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuthCodeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AuthCodeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AuthCodeGroupByArgs['orderBy'] }
+        : { orderBy?: AuthCodeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AuthCodeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAuthCodeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AuthCode model
+   */
+  readonly fields: AuthCodeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AuthCode.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AuthCodeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AuthCode model
+   */
+  interface AuthCodeFieldRefs {
+    readonly id: FieldRef<"AuthCode", 'String'>
+    readonly code: FieldRef<"AuthCode", 'String'>
+    readonly userId: FieldRef<"AuthCode", 'String'>
+    readonly type: FieldRef<"AuthCode", 'String'>
+    readonly createdAt: FieldRef<"AuthCode", 'DateTime'>
+    readonly expiresAt: FieldRef<"AuthCode", 'DateTime'>
+    readonly used: FieldRef<"AuthCode", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AuthCode findUnique
+   */
+  export type AuthCodeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthCode
+     */
+    select?: AuthCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthCode
+     */
+    omit?: AuthCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which AuthCode to fetch.
+     */
+    where: AuthCodeWhereUniqueInput
+  }
+
+  /**
+   * AuthCode findUniqueOrThrow
+   */
+  export type AuthCodeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthCode
+     */
+    select?: AuthCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthCode
+     */
+    omit?: AuthCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which AuthCode to fetch.
+     */
+    where: AuthCodeWhereUniqueInput
+  }
+
+  /**
+   * AuthCode findFirst
+   */
+  export type AuthCodeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthCode
+     */
+    select?: AuthCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthCode
+     */
+    omit?: AuthCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which AuthCode to fetch.
+     */
+    where?: AuthCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AuthCodes to fetch.
+     */
+    orderBy?: AuthCodeOrderByWithRelationInput | AuthCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AuthCodes.
+     */
+    cursor?: AuthCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AuthCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AuthCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AuthCodes.
+     */
+    distinct?: AuthCodeScalarFieldEnum | AuthCodeScalarFieldEnum[]
+  }
+
+  /**
+   * AuthCode findFirstOrThrow
+   */
+  export type AuthCodeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthCode
+     */
+    select?: AuthCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthCode
+     */
+    omit?: AuthCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which AuthCode to fetch.
+     */
+    where?: AuthCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AuthCodes to fetch.
+     */
+    orderBy?: AuthCodeOrderByWithRelationInput | AuthCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AuthCodes.
+     */
+    cursor?: AuthCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AuthCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AuthCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AuthCodes.
+     */
+    distinct?: AuthCodeScalarFieldEnum | AuthCodeScalarFieldEnum[]
+  }
+
+  /**
+   * AuthCode findMany
+   */
+  export type AuthCodeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthCode
+     */
+    select?: AuthCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthCode
+     */
+    omit?: AuthCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which AuthCodes to fetch.
+     */
+    where?: AuthCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AuthCodes to fetch.
+     */
+    orderBy?: AuthCodeOrderByWithRelationInput | AuthCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AuthCodes.
+     */
+    cursor?: AuthCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AuthCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AuthCodes.
+     */
+    skip?: number
+    distinct?: AuthCodeScalarFieldEnum | AuthCodeScalarFieldEnum[]
+  }
+
+  /**
+   * AuthCode create
+   */
+  export type AuthCodeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthCode
+     */
+    select?: AuthCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthCode
+     */
+    omit?: AuthCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthCodeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AuthCode.
+     */
+    data: XOR<AuthCodeCreateInput, AuthCodeUncheckedCreateInput>
+  }
+
+  /**
+   * AuthCode createMany
+   */
+  export type AuthCodeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AuthCodes.
+     */
+    data: AuthCodeCreateManyInput | AuthCodeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AuthCode createManyAndReturn
+   */
+  export type AuthCodeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthCode
+     */
+    select?: AuthCodeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthCode
+     */
+    omit?: AuthCodeOmit<ExtArgs> | null
+    /**
+     * The data used to create many AuthCodes.
+     */
+    data: AuthCodeCreateManyInput | AuthCodeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthCodeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AuthCode update
+   */
+  export type AuthCodeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthCode
+     */
+    select?: AuthCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthCode
+     */
+    omit?: AuthCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthCodeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AuthCode.
+     */
+    data: XOR<AuthCodeUpdateInput, AuthCodeUncheckedUpdateInput>
+    /**
+     * Choose, which AuthCode to update.
+     */
+    where: AuthCodeWhereUniqueInput
+  }
+
+  /**
+   * AuthCode updateMany
+   */
+  export type AuthCodeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AuthCodes.
+     */
+    data: XOR<AuthCodeUpdateManyMutationInput, AuthCodeUncheckedUpdateManyInput>
+    /**
+     * Filter which AuthCodes to update
+     */
+    where?: AuthCodeWhereInput
+    /**
+     * Limit how many AuthCodes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AuthCode updateManyAndReturn
+   */
+  export type AuthCodeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthCode
+     */
+    select?: AuthCodeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthCode
+     */
+    omit?: AuthCodeOmit<ExtArgs> | null
+    /**
+     * The data used to update AuthCodes.
+     */
+    data: XOR<AuthCodeUpdateManyMutationInput, AuthCodeUncheckedUpdateManyInput>
+    /**
+     * Filter which AuthCodes to update
+     */
+    where?: AuthCodeWhereInput
+    /**
+     * Limit how many AuthCodes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthCodeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AuthCode upsert
+   */
+  export type AuthCodeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthCode
+     */
+    select?: AuthCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthCode
+     */
+    omit?: AuthCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthCodeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AuthCode to update in case it exists.
+     */
+    where: AuthCodeWhereUniqueInput
+    /**
+     * In case the AuthCode found by the `where` argument doesn't exist, create a new AuthCode with this data.
+     */
+    create: XOR<AuthCodeCreateInput, AuthCodeUncheckedCreateInput>
+    /**
+     * In case the AuthCode was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AuthCodeUpdateInput, AuthCodeUncheckedUpdateInput>
+  }
+
+  /**
+   * AuthCode delete
+   */
+  export type AuthCodeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthCode
+     */
+    select?: AuthCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthCode
+     */
+    omit?: AuthCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthCodeInclude<ExtArgs> | null
+    /**
+     * Filter which AuthCode to delete.
+     */
+    where: AuthCodeWhereUniqueInput
+  }
+
+  /**
+   * AuthCode deleteMany
+   */
+  export type AuthCodeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AuthCodes to delete
+     */
+    where?: AuthCodeWhereInput
+    /**
+     * Limit how many AuthCodes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AuthCode without action
+   */
+  export type AuthCodeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthCode
+     */
+    select?: AuthCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthCode
+     */
+    omit?: AuthCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthCodeInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4369,6 +5581,19 @@ export namespace Prisma {
   };
 
   export type WatchedScalarFieldEnum = (typeof WatchedScalarFieldEnum)[keyof typeof WatchedScalarFieldEnum]
+
+
+  export const AuthCodeScalarFieldEnum: {
+    id: 'id',
+    code: 'code',
+    userId: 'userId',
+    type: 'type',
+    createdAt: 'createdAt',
+    expiresAt: 'expiresAt',
+    used: 'used'
+  };
+
+  export type AuthCodeScalarFieldEnum = (typeof AuthCodeScalarFieldEnum)[keyof typeof AuthCodeScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4435,6 +5660,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4461,6 +5693,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     WatchList?: WatchListListRelationFilter
     Watched?: WatchedListRelationFilter
+    AuthCode?: AuthCodeListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -4470,6 +5703,7 @@ export namespace Prisma {
     password?: SortOrder
     WatchList?: WatchListOrderByRelationAggregateInput
     Watched?: WatchedOrderByRelationAggregateInput
+    AuthCode?: AuthCodeOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -4482,6 +5716,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     WatchList?: WatchListListRelationFilter
     Watched?: WatchedListRelationFilter
+    AuthCode?: AuthCodeListRelationFilter
   }, "id" | "email" | "username">
 
   export type UserOrderByWithAggregationInput = {
@@ -4616,6 +5851,71 @@ export namespace Prisma {
     review?: StringWithAggregatesFilter<"Watched"> | string
   }
 
+  export type AuthCodeWhereInput = {
+    AND?: AuthCodeWhereInput | AuthCodeWhereInput[]
+    OR?: AuthCodeWhereInput[]
+    NOT?: AuthCodeWhereInput | AuthCodeWhereInput[]
+    id?: StringFilter<"AuthCode"> | string
+    code?: StringFilter<"AuthCode"> | string
+    userId?: StringFilter<"AuthCode"> | string
+    type?: StringFilter<"AuthCode"> | string
+    createdAt?: DateTimeFilter<"AuthCode"> | Date | string
+    expiresAt?: DateTimeFilter<"AuthCode"> | Date | string
+    used?: BoolFilter<"AuthCode"> | boolean
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type AuthCodeOrderByWithRelationInput = {
+    id?: SortOrder
+    code?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    expiresAt?: SortOrder
+    used?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type AuthCodeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AuthCodeWhereInput | AuthCodeWhereInput[]
+    OR?: AuthCodeWhereInput[]
+    NOT?: AuthCodeWhereInput | AuthCodeWhereInput[]
+    code?: StringFilter<"AuthCode"> | string
+    userId?: StringFilter<"AuthCode"> | string
+    type?: StringFilter<"AuthCode"> | string
+    createdAt?: DateTimeFilter<"AuthCode"> | Date | string
+    expiresAt?: DateTimeFilter<"AuthCode"> | Date | string
+    used?: BoolFilter<"AuthCode"> | boolean
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type AuthCodeOrderByWithAggregationInput = {
+    id?: SortOrder
+    code?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    expiresAt?: SortOrder
+    used?: SortOrder
+    _count?: AuthCodeCountOrderByAggregateInput
+    _max?: AuthCodeMaxOrderByAggregateInput
+    _min?: AuthCodeMinOrderByAggregateInput
+  }
+
+  export type AuthCodeScalarWhereWithAggregatesInput = {
+    AND?: AuthCodeScalarWhereWithAggregatesInput | AuthCodeScalarWhereWithAggregatesInput[]
+    OR?: AuthCodeScalarWhereWithAggregatesInput[]
+    NOT?: AuthCodeScalarWhereWithAggregatesInput | AuthCodeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AuthCode"> | string
+    code?: StringWithAggregatesFilter<"AuthCode"> | string
+    userId?: StringWithAggregatesFilter<"AuthCode"> | string
+    type?: StringWithAggregatesFilter<"AuthCode"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"AuthCode"> | Date | string
+    expiresAt?: DateTimeWithAggregatesFilter<"AuthCode"> | Date | string
+    used?: BoolWithAggregatesFilter<"AuthCode"> | boolean
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -4623,6 +5923,7 @@ export namespace Prisma {
     password: string
     WatchList?: WatchListCreateNestedManyWithoutUserInput
     Watched?: WatchedCreateNestedManyWithoutUserInput
+    AuthCode?: AuthCodeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -4632,6 +5933,7 @@ export namespace Prisma {
     password: string
     WatchList?: WatchListUncheckedCreateNestedManyWithoutUserInput
     Watched?: WatchedUncheckedCreateNestedManyWithoutUserInput
+    AuthCode?: AuthCodeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -4641,6 +5943,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     WatchList?: WatchListUpdateManyWithoutUserNestedInput
     Watched?: WatchedUpdateManyWithoutUserNestedInput
+    AuthCode?: AuthCodeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -4650,6 +5953,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     WatchList?: WatchListUncheckedUpdateManyWithoutUserNestedInput
     Watched?: WatchedUncheckedUpdateManyWithoutUserNestedInput
+    AuthCode?: AuthCodeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -4783,6 +6087,75 @@ export namespace Prisma {
     review?: StringFieldUpdateOperationsInput | string
   }
 
+  export type AuthCodeCreateInput = {
+    id?: string
+    code: string
+    type: string
+    createdAt?: Date | string
+    expiresAt: Date | string
+    used: boolean
+    user: UserCreateNestedOneWithoutAuthCodeInput
+  }
+
+  export type AuthCodeUncheckedCreateInput = {
+    id?: string
+    code: string
+    userId: string
+    type: string
+    createdAt?: Date | string
+    expiresAt: Date | string
+    used: boolean
+  }
+
+  export type AuthCodeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    used?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutAuthCodeNestedInput
+  }
+
+  export type AuthCodeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    used?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AuthCodeCreateManyInput = {
+    id?: string
+    code: string
+    userId: string
+    type: string
+    createdAt?: Date | string
+    expiresAt: Date | string
+    used: boolean
+  }
+
+  export type AuthCodeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    used?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AuthCodeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    used?: BoolFieldUpdateOperationsInput | boolean
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -4810,11 +6183,21 @@ export namespace Prisma {
     none?: WatchedWhereInput
   }
 
+  export type AuthCodeListRelationFilter = {
+    every?: AuthCodeWhereInput
+    some?: AuthCodeWhereInput
+    none?: AuthCodeWhereInput
+  }
+
   export type WatchListOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type WatchedOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AuthCodeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -4970,6 +6353,49 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type AuthCodeCountOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    expiresAt?: SortOrder
+    used?: SortOrder
+  }
+
+  export type AuthCodeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    expiresAt?: SortOrder
+    used?: SortOrder
+  }
+
+  export type AuthCodeMinOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+    expiresAt?: SortOrder
+    used?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type WatchListCreateNestedManyWithoutUserInput = {
     create?: XOR<WatchListCreateWithoutUserInput, WatchListUncheckedCreateWithoutUserInput> | WatchListCreateWithoutUserInput[] | WatchListUncheckedCreateWithoutUserInput[]
     connectOrCreate?: WatchListCreateOrConnectWithoutUserInput | WatchListCreateOrConnectWithoutUserInput[]
@@ -4984,6 +6410,13 @@ export namespace Prisma {
     connect?: WatchedWhereUniqueInput | WatchedWhereUniqueInput[]
   }
 
+  export type AuthCodeCreateNestedManyWithoutUserInput = {
+    create?: XOR<AuthCodeCreateWithoutUserInput, AuthCodeUncheckedCreateWithoutUserInput> | AuthCodeCreateWithoutUserInput[] | AuthCodeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AuthCodeCreateOrConnectWithoutUserInput | AuthCodeCreateOrConnectWithoutUserInput[]
+    createMany?: AuthCodeCreateManyUserInputEnvelope
+    connect?: AuthCodeWhereUniqueInput | AuthCodeWhereUniqueInput[]
+  }
+
   export type WatchListUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<WatchListCreateWithoutUserInput, WatchListUncheckedCreateWithoutUserInput> | WatchListCreateWithoutUserInput[] | WatchListUncheckedCreateWithoutUserInput[]
     connectOrCreate?: WatchListCreateOrConnectWithoutUserInput | WatchListCreateOrConnectWithoutUserInput[]
@@ -4996,6 +6429,13 @@ export namespace Prisma {
     connectOrCreate?: WatchedCreateOrConnectWithoutUserInput | WatchedCreateOrConnectWithoutUserInput[]
     createMany?: WatchedCreateManyUserInputEnvelope
     connect?: WatchedWhereUniqueInput | WatchedWhereUniqueInput[]
+  }
+
+  export type AuthCodeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<AuthCodeCreateWithoutUserInput, AuthCodeUncheckedCreateWithoutUserInput> | AuthCodeCreateWithoutUserInput[] | AuthCodeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AuthCodeCreateOrConnectWithoutUserInput | AuthCodeCreateOrConnectWithoutUserInput[]
+    createMany?: AuthCodeCreateManyUserInputEnvelope
+    connect?: AuthCodeWhereUniqueInput | AuthCodeWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5030,6 +6470,20 @@ export namespace Prisma {
     deleteMany?: WatchedScalarWhereInput | WatchedScalarWhereInput[]
   }
 
+  export type AuthCodeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AuthCodeCreateWithoutUserInput, AuthCodeUncheckedCreateWithoutUserInput> | AuthCodeCreateWithoutUserInput[] | AuthCodeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AuthCodeCreateOrConnectWithoutUserInput | AuthCodeCreateOrConnectWithoutUserInput[]
+    upsert?: AuthCodeUpsertWithWhereUniqueWithoutUserInput | AuthCodeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AuthCodeCreateManyUserInputEnvelope
+    set?: AuthCodeWhereUniqueInput | AuthCodeWhereUniqueInput[]
+    disconnect?: AuthCodeWhereUniqueInput | AuthCodeWhereUniqueInput[]
+    delete?: AuthCodeWhereUniqueInput | AuthCodeWhereUniqueInput[]
+    connect?: AuthCodeWhereUniqueInput | AuthCodeWhereUniqueInput[]
+    update?: AuthCodeUpdateWithWhereUniqueWithoutUserInput | AuthCodeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AuthCodeUpdateManyWithWhereWithoutUserInput | AuthCodeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AuthCodeScalarWhereInput | AuthCodeScalarWhereInput[]
+  }
+
   export type WatchListUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<WatchListCreateWithoutUserInput, WatchListUncheckedCreateWithoutUserInput> | WatchListCreateWithoutUserInput[] | WatchListUncheckedCreateWithoutUserInput[]
     connectOrCreate?: WatchListCreateOrConnectWithoutUserInput | WatchListCreateOrConnectWithoutUserInput[]
@@ -5056,6 +6510,20 @@ export namespace Prisma {
     update?: WatchedUpdateWithWhereUniqueWithoutUserInput | WatchedUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: WatchedUpdateManyWithWhereWithoutUserInput | WatchedUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: WatchedScalarWhereInput | WatchedScalarWhereInput[]
+  }
+
+  export type AuthCodeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AuthCodeCreateWithoutUserInput, AuthCodeUncheckedCreateWithoutUserInput> | AuthCodeCreateWithoutUserInput[] | AuthCodeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AuthCodeCreateOrConnectWithoutUserInput | AuthCodeCreateOrConnectWithoutUserInput[]
+    upsert?: AuthCodeUpsertWithWhereUniqueWithoutUserInput | AuthCodeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AuthCodeCreateManyUserInputEnvelope
+    set?: AuthCodeWhereUniqueInput | AuthCodeWhereUniqueInput[]
+    disconnect?: AuthCodeWhereUniqueInput | AuthCodeWhereUniqueInput[]
+    delete?: AuthCodeWhereUniqueInput | AuthCodeWhereUniqueInput[]
+    connect?: AuthCodeWhereUniqueInput | AuthCodeWhereUniqueInput[]
+    update?: AuthCodeUpdateWithWhereUniqueWithoutUserInput | AuthCodeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AuthCodeUpdateManyWithWhereWithoutUserInput | AuthCodeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AuthCodeScalarWhereInput | AuthCodeScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutWatchListInput = {
@@ -5096,6 +6564,24 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutWatchedInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWatchedInput, UserUpdateWithoutWatchedInput>, UserUncheckedUpdateWithoutWatchedInput>
+  }
+
+  export type UserCreateNestedOneWithoutAuthCodeInput = {
+    create?: XOR<UserCreateWithoutAuthCodeInput, UserUncheckedCreateWithoutAuthCodeInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAuthCodeInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type UserUpdateOneRequiredWithoutAuthCodeNestedInput = {
+    create?: XOR<UserCreateWithoutAuthCodeInput, UserUncheckedCreateWithoutAuthCodeInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAuthCodeInput
+    upsert?: UserUpsertWithoutAuthCodeInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAuthCodeInput, UserUpdateWithoutAuthCodeInput>, UserUncheckedUpdateWithoutAuthCodeInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5192,6 +6678,19 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type WatchListCreateWithoutUserInput = {
     id?: string
     movieId: string
@@ -5237,6 +6736,34 @@ export namespace Prisma {
 
   export type WatchedCreateManyUserInputEnvelope = {
     data: WatchedCreateManyUserInput | WatchedCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AuthCodeCreateWithoutUserInput = {
+    id?: string
+    code: string
+    type: string
+    createdAt?: Date | string
+    expiresAt: Date | string
+    used: boolean
+  }
+
+  export type AuthCodeUncheckedCreateWithoutUserInput = {
+    id?: string
+    code: string
+    type: string
+    createdAt?: Date | string
+    expiresAt: Date | string
+    used: boolean
+  }
+
+  export type AuthCodeCreateOrConnectWithoutUserInput = {
+    where: AuthCodeWhereUniqueInput
+    create: XOR<AuthCodeCreateWithoutUserInput, AuthCodeUncheckedCreateWithoutUserInput>
+  }
+
+  export type AuthCodeCreateManyUserInputEnvelope = {
+    data: AuthCodeCreateManyUserInput | AuthCodeCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -5294,12 +6821,42 @@ export namespace Prisma {
     review?: StringFilter<"Watched"> | string
   }
 
+  export type AuthCodeUpsertWithWhereUniqueWithoutUserInput = {
+    where: AuthCodeWhereUniqueInput
+    update: XOR<AuthCodeUpdateWithoutUserInput, AuthCodeUncheckedUpdateWithoutUserInput>
+    create: XOR<AuthCodeCreateWithoutUserInput, AuthCodeUncheckedCreateWithoutUserInput>
+  }
+
+  export type AuthCodeUpdateWithWhereUniqueWithoutUserInput = {
+    where: AuthCodeWhereUniqueInput
+    data: XOR<AuthCodeUpdateWithoutUserInput, AuthCodeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type AuthCodeUpdateManyWithWhereWithoutUserInput = {
+    where: AuthCodeScalarWhereInput
+    data: XOR<AuthCodeUpdateManyMutationInput, AuthCodeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type AuthCodeScalarWhereInput = {
+    AND?: AuthCodeScalarWhereInput | AuthCodeScalarWhereInput[]
+    OR?: AuthCodeScalarWhereInput[]
+    NOT?: AuthCodeScalarWhereInput | AuthCodeScalarWhereInput[]
+    id?: StringFilter<"AuthCode"> | string
+    code?: StringFilter<"AuthCode"> | string
+    userId?: StringFilter<"AuthCode"> | string
+    type?: StringFilter<"AuthCode"> | string
+    createdAt?: DateTimeFilter<"AuthCode"> | Date | string
+    expiresAt?: DateTimeFilter<"AuthCode"> | Date | string
+    used?: BoolFilter<"AuthCode"> | boolean
+  }
+
   export type UserCreateWithoutWatchListInput = {
     id?: string
     email: string
     username: string
     password: string
     Watched?: WatchedCreateNestedManyWithoutUserInput
+    AuthCode?: AuthCodeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWatchListInput = {
@@ -5308,6 +6865,7 @@ export namespace Prisma {
     username: string
     password: string
     Watched?: WatchedUncheckedCreateNestedManyWithoutUserInput
+    AuthCode?: AuthCodeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWatchListInput = {
@@ -5332,6 +6890,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     Watched?: WatchedUpdateManyWithoutUserNestedInput
+    AuthCode?: AuthCodeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWatchListInput = {
@@ -5340,6 +6899,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     Watched?: WatchedUncheckedUpdateManyWithoutUserNestedInput
+    AuthCode?: AuthCodeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutWatchedInput = {
@@ -5348,6 +6908,7 @@ export namespace Prisma {
     username: string
     password: string
     WatchList?: WatchListCreateNestedManyWithoutUserInput
+    AuthCode?: AuthCodeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWatchedInput = {
@@ -5356,6 +6917,7 @@ export namespace Prisma {
     username: string
     password: string
     WatchList?: WatchListUncheckedCreateNestedManyWithoutUserInput
+    AuthCode?: AuthCodeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWatchedInput = {
@@ -5380,6 +6942,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     WatchList?: WatchListUpdateManyWithoutUserNestedInput
+    AuthCode?: AuthCodeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWatchedInput = {
@@ -5388,6 +6951,59 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     WatchList?: WatchListUncheckedUpdateManyWithoutUserNestedInput
+    AuthCode?: AuthCodeUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutAuthCodeInput = {
+    id?: string
+    email: string
+    username: string
+    password: string
+    WatchList?: WatchListCreateNestedManyWithoutUserInput
+    Watched?: WatchedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutAuthCodeInput = {
+    id?: string
+    email: string
+    username: string
+    password: string
+    WatchList?: WatchListUncheckedCreateNestedManyWithoutUserInput
+    Watched?: WatchedUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutAuthCodeInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAuthCodeInput, UserUncheckedCreateWithoutAuthCodeInput>
+  }
+
+  export type UserUpsertWithoutAuthCodeInput = {
+    update: XOR<UserUpdateWithoutAuthCodeInput, UserUncheckedUpdateWithoutAuthCodeInput>
+    create: XOR<UserCreateWithoutAuthCodeInput, UserUncheckedCreateWithoutAuthCodeInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAuthCodeInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAuthCodeInput, UserUncheckedUpdateWithoutAuthCodeInput>
+  }
+
+  export type UserUpdateWithoutAuthCodeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    WatchList?: WatchListUpdateManyWithoutUserNestedInput
+    Watched?: WatchedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAuthCodeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    WatchList?: WatchListUncheckedUpdateManyWithoutUserNestedInput
+    Watched?: WatchedUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WatchListCreateManyUserInput = {
@@ -5402,6 +7018,15 @@ export namespace Prisma {
     createdAt?: Date | string
     rating: number
     review: string
+  }
+
+  export type AuthCodeCreateManyUserInput = {
+    id?: string
+    code: string
+    type: string
+    createdAt?: Date | string
+    expiresAt: Date | string
+    used: boolean
   }
 
   export type WatchListUpdateWithoutUserInput = {
@@ -5444,6 +7069,33 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     rating?: IntFieldUpdateOperationsInput | number
     review?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AuthCodeUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    used?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AuthCodeUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    used?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AuthCodeUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    used?: BoolFieldUpdateOperationsInput | boolean
   }
 
 

@@ -46,4 +46,22 @@ describe('AuthService', () => {
     // Assert
     expect(result).toBeNull();
   });
+
+  // it('should return a password reset code', async () => {
+  //   // Arrange
+  //   prismaMock.authCode.findFirst.mockResolvedValue(null);
+  //   const code = service.generateRandomCode();
+  //   prismaMock.authCode.create.mockResolvedValue({
+  //     id: 'test-id',
+  //     code,
+  //     userId: 'test-user-id',
+  //     type: 'PASSWORD-RESET',
+  //     createdAt: Date.now(),
+  //     expiresAt: new Date().setMinutes(Date.now() + 30),
+  //     used: false,
+  //   });
+  //   // Act
+
+  //   // Assert
+  // });
 });

@@ -140,6 +140,16 @@ exports.Prisma.WatchedScalarFieldEnum = {
   review: 'review'
 };
 
+exports.Prisma.AuthCodeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  userId: 'userId',
+  type: 'type',
+  createdAt: 'createdAt',
+  expiresAt: 'expiresAt',
+  used: 'used'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -154,7 +164,8 @@ exports.Prisma.QueryMode = {
 exports.Prisma.ModelName = {
   User: 'User',
   WatchList: 'WatchList',
-  Watched: 'Watched'
+  Watched: 'Watched',
+  AuthCode: 'AuthCode'
 };
 
 /**

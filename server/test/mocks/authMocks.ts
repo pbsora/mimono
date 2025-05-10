@@ -22,6 +22,15 @@ export const prismaMock = {
     delete: jest.fn(),
     deleteMany: jest.fn(),
   },
+  authCode: {
+    findUnique: jest.fn(),
+    findFirst: jest.fn(),
+    findMany: jest.fn(),
+    create: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
+    deleteMany: jest.fn(),
+  },
   watchList: {
     findUnique: jest.fn(),
     findFirst: jest.fn(),
