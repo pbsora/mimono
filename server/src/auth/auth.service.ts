@@ -12,6 +12,11 @@ type Result = {
   username: string;
 };
 
+enum AuthCodeType {
+  PASSWORD_RESET = 'PASSWORD_RESET',
+  EMAIL_VERIFICATION = 'EMAIL_VERIFICATION',
+}
+
 @Injectable()
 export class AuthService {
   private transporter: nodemailer.Transporter;
@@ -49,7 +54,11 @@ export class AuthService {
   }
 
   async login(user: User) {
-    const payload: JwtPayload = { username: user.username, sub: user.id };
+    const payload: JwtPayload = {
+      username: user.username,
+      sub: user.id,
+      email: user.email,
+    };
     return {
       access_token: this.jwtService.sign(payload),
     };
@@ -63,7 +72,7 @@ export class AuthService {
     const recentCode = await this.prisma.authCode.findFirst({
       where: {
         userId: user.id,
-        type: 'PASSWORD_RESET',
+        type: AuthCodeType.PASSWORD_RESET,
         createdAt: {
           gt: new Date(Date.now() - 5 * 60 * 1000), // 5 minutes
         },
@@ -80,7 +89,7 @@ export class AuthService {
     await this.prisma.authCode.updateMany({
       where: {
         userId: user.id,
-        type: 'PASSWORD_RESET',
+        type: AuthCodeType.PASSWORD_RESET,
         used: false,
       },
       data: {
@@ -96,7 +105,7 @@ export class AuthService {
       data: {
         code,
         userId: user.id,
-        type: 'PASSWORD_RESET',
+        type: AuthCodeType.PASSWORD_RESET,
         expiresAt,
         used: false,
       },
@@ -108,7 +117,7 @@ export class AuthService {
 
     const emailSent = await this.sendEmail(
       subject,
-      'Password Reset',
+      AuthCodeType.PASSWORD_RESET,
       `Your reset code is: ${code}`,
     );
 
@@ -118,7 +127,7 @@ export class AuthService {
     return Math.random().toString(36).substring(2, 8);
   }
 
-  async validateCode(code: string, userId: string) {
+  async validateCode(code: string, userId: string, type: AuthCodeType) {
     const codeExists = await this.prisma.authCode.findFirst({
       where: {
         code,
@@ -127,7 +136,7 @@ export class AuthService {
         expiresAt: {
           gt: new Date(),
         },
-        type: 'PASSWORD_RESET',
+        type,
       },
     });
 
@@ -146,7 +155,11 @@ export class AuthService {
     newPassword: string,
     verificationCode: string,
   ) {
-    const isCodeValid = await this.validateCode(verificationCode, userId);
+    const isCodeValid = await this.validateCode(
+      verificationCode,
+      userId,
+      AuthCodeType.PASSWORD_RESET,
+    );
     if (!isCodeValid) {
       throw new BadRequestException('Invalid verification code');
     }
@@ -161,6 +174,119 @@ export class AuthService {
       return true;
     }
     return false;
+  }
+
+  async changeEmail(
+    userId: string,
+    newEmail: string,
+    oldVerificationCode: string,
+    newVerificationCode: string,
+  ) {
+    const [isOldCodeValid, isNewCodeValid] = await Promise.all([
+      await this.validateCode(
+        oldVerificationCode,
+        userId,
+        AuthCodeType.EMAIL_VERIFICATION,
+      ),
+      await this.validateCode(
+        newVerificationCode,
+        userId,
+        AuthCodeType.EMAIL_VERIFICATION,
+      ),
+    ]);
+
+    if (!isOldCodeValid || !isNewCodeValid) {
+      throw new BadRequestException('Invalid verification code');
+    }
+    const res = await this.prisma.user.update({
+      where: { id: userId },
+      data: { email: newEmail },
+    });
+
+    if (res) {
+      return true;
+    }
+    return false;
+  }
+
+  async generateEmailChangeCodes(
+    user: User,
+    oldEmail: string,
+    newEmail: string,
+  ): Promise<{ oldEmailSent: boolean; newEmailSent: boolean }> {
+    // Check if user has recently requested a code
+    const recentCode = await this.prisma.authCode.findFirst({
+      where: {
+        userId: user.id,
+        type: AuthCodeType.EMAIL_VERIFICATION,
+        createdAt: {
+          gt: new Date(Date.now() - 5 * 60 * 1000), // 5 minutes
+        },
+      },
+    });
+
+    if (recentCode) {
+      throw new BadRequestException(
+        'Please wait 5 minutes before requesting another code',
+      );
+    }
+
+    // Clean up any existing unused codes for this user
+    await this.prisma.authCode.updateMany({
+      where: {
+        userId: user.id,
+        type: AuthCodeType.EMAIL_VERIFICATION,
+        used: false,
+      },
+      data: {
+        used: true,
+      },
+    });
+
+    const oldVerificationCode = this.generateRandomCode();
+    const newVerificationCode = this.generateRandomCode();
+
+    const expiresAt = new Date();
+    expiresAt.setMinutes(expiresAt.getMinutes() + 30); // 30 minutes expiration
+
+    const [createdCodeOld, createdCodeNew] = await Promise.all([
+      await this.prisma.authCode.create({
+        data: {
+          code: oldVerificationCode,
+          userId: user.id,
+          type: AuthCodeType.EMAIL_VERIFICATION,
+          expiresAt,
+          used: false,
+        },
+      }),
+      await this.prisma.authCode.create({
+        data: {
+          code: newVerificationCode,
+          userId: user.id,
+          type: AuthCodeType.EMAIL_VERIFICATION,
+          expiresAt,
+          used: false,
+        },
+      }),
+    ]);
+
+    if (!createdCodeOld || !createdCodeNew) {
+      throw new Error('Failed to create password reset code');
+    }
+
+    const [oldEmailSent, newEmailSent] = await Promise.all([
+      await this.sendEmail(
+        oldEmail,
+        'Email Change Verification',
+        `Your reset code is: ${oldVerificationCode}`,
+      ),
+      await this.sendEmail(
+        newEmail,
+        'Email Change Verification',
+        `Your reset code is: ${newVerificationCode}`,
+      ),
+    ]);
+    return { oldEmailSent, newEmailSent };
   }
 
   async sendEmail(
